@@ -1,9 +1,8 @@
 package com.selection.process.store.api.entity;
 
-import com.selection.process.store.api.dto.ProductMaxDTO;
+import com.selection.process.store.api.dto.ProductDTO;
 import jakarta.persistence.*;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -33,7 +32,7 @@ public class Product {
         this.amount = amount;
     }
 
-    public Product(ProductMaxDTO dto){
+    public Product(ProductDTO dto){
         this.id = dto.getId();
         this.amount = dto.getAmount();
         this.name = dto.getName();

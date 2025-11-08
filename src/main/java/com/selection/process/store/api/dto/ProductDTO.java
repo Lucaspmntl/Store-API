@@ -1,12 +1,11 @@
 package com.selection.process.store.api.dto;
 
 import com.selection.process.store.api.entity.Product;
-import jakarta.persistence.Column;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class ProductMaxDTO {
+public class ProductDTO {
 
     private long id;
     private String description;
@@ -29,9 +28,9 @@ public class ProductMaxDTO {
     public int getAmount() { return amount; }
     public void setAmount(int amount) { this.amount = amount; }
 
-    public ProductMaxDTO(){}
+    public ProductDTO(){}
 
-    public ProductMaxDTO(long id, String description, BigDecimal price, String name, int amount) {
+    public ProductDTO(long id, String description, BigDecimal price, String name, int amount) {
         this.id = id;
         this.description = description;
         this.price = price;
@@ -39,7 +38,7 @@ public class ProductMaxDTO {
         this.amount = amount;
     }
 
-    public ProductMaxDTO(Product obj){
+    public ProductDTO(Product obj){
         this.id = obj.getId();
         this.amount = obj.getAmount();
         this.name = obj.getName();
@@ -50,7 +49,7 @@ public class ProductMaxDTO {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        ProductMaxDTO that = (ProductMaxDTO) o;
+        ProductDTO that = (ProductDTO) o;
         return id == that.id;
     }
 
