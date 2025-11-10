@@ -1,5 +1,6 @@
 package com.selection.process.store.api.entity;
 
+import com.selection.process.store.api.dto.NewProductDTO;
 import com.selection.process.store.api.dto.ProductDTO;
 import jakarta.persistence.*;
 
@@ -20,21 +21,28 @@ public class Product {
     private BigDecimal price;
 
     private String name;
-    private int amount;
+    private int quantity;
 
     public Product(){}
 
-    public Product(long id, String description, BigDecimal price, String name, int amount) {
+    public Product(long id, String description, BigDecimal price, String name, int quantity) {
         this.id = id;
         this.description = description;
         this.price = price;
         this.name = name;
-        this.amount = amount;
+        this.quantity = quantity;
+    }
+
+    public Product(NewProductDTO dto){
+        this.quantity = dto.getQuantity();
+        this.name = dto.getName();
+        this.price = dto.getPrice();
+        this.description = dto.getDescription();
     }
 
     public Product(ProductDTO dto){
         this.id = dto.getId();
-        this.amount = dto.getAmount();
+        this.quantity = dto.getQuantity();
         this.name = dto.getName();
         this.price = dto.getPrice();
         this.description = dto.getDescription();
@@ -51,18 +59,18 @@ public class Product {
     public BigDecimal getPrice() { return price; }
     public void setPrice(BigDecimal price) { this.price = price; }
 
-    public int getAmount() { return amount; }
-    public void setAmount(int amount) { this.amount = amount; }
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return id == product.id && amount == product.amount && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price);
+        return id == product.id && quantity == product.quantity && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, price, amount);
+        return Objects.hash(id, name, description, price, quantity);
     }
 }

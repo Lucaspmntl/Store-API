@@ -1,4 +1,4 @@
-package com.selection.process.store.api.dto;
+package com.selection.process.store.api.dto.response;
 
 public class GenericResponseDTO {
 

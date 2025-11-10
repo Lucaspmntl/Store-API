@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler{
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     private ResponseEntity<ValidationErrorResponseDTO> MethodArgumentNotValidHandler(MethodArgumentNotValidException exception) {
@@ -41,12 +41,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 
-    @ExceptionHandler(EmptyFieldException.class)
-    private ResponseEntity<String> emptyField(EmptyFieldException exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo obrigatório não vazio!");
-    }
-
-    private ResponseEntity<String> negativeValue(NegativeValueException exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O valor não pode ser negativo");
-    }
 }

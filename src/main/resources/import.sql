@@ -1,0 +1,3 @@
+INSERT INTO product (description, price, name, quantity) VALUES ('Caneta esferográfica de ponta fina, tinta preta, ideal para escrita diária.', 2.50, 'Caneta Esferográfica Preta', 500);
+INSERT INTO product (description, price, name, quantity) VALUES ('Caderno universitário de 10 matérias, capa dura, 200 folhas pautadas.', 28.99, 'Caderno Universitário', 150);
+INSERT INTO product (description, price, name, quantity) VALUES ('Mochila resistente à água com compartimento acolchoado para notebook de até 15 polegadas.', 129.50, 'Mochila para Notebook', 75);

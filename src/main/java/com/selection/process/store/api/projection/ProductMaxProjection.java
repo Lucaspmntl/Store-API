@@ -7,5 +7,5 @@ public interface ProductMaxProjection {
     String getName();
     BigDecimal getPrice();
     String getDescription();
-    Integer getAmount();
+    Integer getQuantity();
 }

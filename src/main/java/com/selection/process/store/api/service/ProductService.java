@@ -1,13 +1,20 @@
 package com.selection.process.store.api.service;
 
-import com.selection.process.store.api.dto.GenericResponseDTO;
+import com.selection.process.store.api.dto.NewProductDTO;
+import com.selection.process.store.api.dto.response.GenericResponseDTO;
 import com.selection.process.store.api.dto.ProductDTO;
+import com.selection.process.store.api.entity.Product;
+import com.selection.process.store.api.exception.EmptyFieldException;
+import com.selection.process.store.api.exception.NegativeValueException;
+import com.selection.process.store.api.exception.ResourceNotFoundException;
 import com.selection.process.store.api.projection.ProductMaxProjection;
 import com.selection.process.store.api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -20,8 +27,13 @@ public class ProductService {
     * Lista todos os produtos registrados no banco de dados
      * @return uma lista com os dados de todos os produtos cadastrados no banco.
     */
-    public List<ProductMaxProjection> findAll(){
-        return null;
+    public List<ProductDTO> findAll(){
+        List<Product> list = productRepository.findAll();
+        List<ProductDTO> dto = list.stream()
+                .map(obj -> new ProductDTO(obj))
+                .toList();
+
+        return dto;
     }
 
     /**
@@ -32,18 +44,22 @@ public class ProductService {
      * @throws ResourceNotFoundException caso nenhum produto seja encontrado pelo id fornecido.
     **/
     public ProductDTO findById(long productId){
-        return null;
+        Product product = productRepository.findById(productId).
+                orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
+
+        return new ProductDTO(product);
     }
 
     /**
     * Adiciona um novo produto ao banco de dados.
     * @param dto se refere ao objeto com os dados do novo produto.
      * @return o objeto criado, com seus respectivos dados.
-     * @throws EmptyFieldException caso o nome esteja vazio.
-     * @throws NegativeValueException caso o preço ou a quantidade seja um número negativo.
+     * @throws MethodArgumentNotValidException caso o nome esteja vazio.
+     * @throws MethodArgumentNotValidException caso o preço ou a quantidade seja um número negativo.
      */
-    public ProductDTO create(ProductDTO dto){
-        return null;
+    public ProductDTO create(NewProductDTO dto){
+        Product registeredProduct = productRepository.save(new Product(dto));
+        return new ProductDTO(registeredProduct);
     }
 
     /**
@@ -51,8 +67,8 @@ public class ProductService {
      * @param dto se refere ao objeto com os dados do produto a ser atualizado.
      * @return o novo produto atualizado
      * @throws ResourceNotFoundException caso o produto do id fornecido não seja encontrado.
-     * @throws NegativeValueException caso o preço ou a quantidade seja um número negativo.
-     * @throws EmptyFieldException caso o nome esteja vazio.
+     * @throws MethodArgumentNotValidException caso o preço ou a quantidade seja um número negativo.
+     * @throws MethodArgumentNotValidException caso o nome esteja vazio.
      */
     public ProductDTO update(ProductDTO dto){
         return null;

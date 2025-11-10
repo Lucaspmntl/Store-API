@@ -3,18 +3,17 @@ package com.selection.process.store.api.dto.response;
 public class GenericIdResponseDTO {
 
     private String message;
-    private long respectiveId;
+    private long id;
+    private int status;
 
     public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
-
-    public long getRespectiveId() { return respectiveId; }
-    public void setRespectiveId(long respectiveId) { this.respectiveId = respectiveId; }
+    public long getId() { return id; }
+    public int getStatus() {return status;}
 
     public GenericIdResponseDTO(){}
-
-    public GenericIdResponseDTO(String message, long respectiveId) {
+    public GenericIdResponseDTO(String message, long id, int status) {
         this.message = message;
-        this.respectiveId = respectiveId;
+        this.id = id;
+        this.status = status;
     }
 }
