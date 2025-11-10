@@ -1,9 +1,7 @@
 package com.selection.process.store.api.dto;
 
 import com.selection.process.store.api.entity.Product;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -12,7 +10,8 @@ public class ProductDTO {
 
     private long id;
 
-    @Min(message = "A descrição deve ter no mínimo 12 caracteres!", value = 12)
+    @NotBlank(message = "A descrição deve ser preenchida!")
+    @Size(message = "A descrição deve ter entre 12 e 300 caracteres!", min = 12, max = 300)
     private String description;
 
     @NotBlank(message = "O Valor deve ser preenchido!")
@@ -20,14 +19,14 @@ public class ProductDTO {
     private BigDecimal price;
 
     @NotBlank(message = "O nome deve ser preenchido!")
+    @Size(message = "O nome deve ter entre 5 e 100 caracteres", max = 100, min = 5)
     private String name;
 
-    @NotBlank(message = "O Valor deve ser preenchido!")
+    @NotNull(message = "O Valor deve ser preenchido!")
     @Positive(message = "O valor deve ser positivo!")
     private int quantity;
 
     public long getId() { return id; }
-    // public void setId(long id) { this.id = id; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }

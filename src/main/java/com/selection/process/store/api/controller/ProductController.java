@@ -1,9 +1,11 @@
 package com.selection.process.store.api.controller;
 
 import com.selection.process.store.api.dto.NewProductDTO;
+import com.selection.process.store.api.dto.UpdateProductDTO;
 import com.selection.process.store.api.dto.response.GenericIdResponseDTO;
 import com.selection.process.store.api.dto.response.GenericResponseDTO;
 import com.selection.process.store.api.dto.ProductDTO;
+import com.selection.process.store.api.dto.response.UpdatedProductResponseDTO;
 import com.selection.process.store.api.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +41,18 @@ public class ProductController {
                 new GenericIdResponseDTO("Produto registrado com sucesso!", registeredProduct.getId(), 201));
     }
 
-    @PutMapping(value = "/update")
-    public ResponseEntity<GenericResponseDTO> updateProduct(@RequestBody ProductDTO dto){
-        return null;
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UpdatedProductResponseDTO> updateProduct(
+            @PathVariable long id,
+            @Valid @RequestBody UpdateProductDTO dto){
+
+        ProductDTO updatedProductDTO = productService.update(dto, id);
+
+        return ResponseEntity.ok(new UpdatedProductResponseDTO(
+                "Produto atualizado com sucesso!",
+                updatedProductDTO,
+                HttpStatus.OK.value()
+        ));
     }
 
     @GetMapping(value = "/search")

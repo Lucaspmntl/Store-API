@@ -9,7 +9,7 @@ import java.util.Objects;
 public class NewProductDTO {
 
     @NotBlank(message = "A descrição deve ser preenchida!")
-    @Size(min = 12, message = "A descrição deve conter ao menos 12 caracteres!")
+    @Size(message = "A descrição deve ter entre 12 e 300 caracteres!", min = 12, max = 300)
     private String description;
 
     @NotNull(message = "O preço deve ser informado!")
@@ -17,11 +17,12 @@ public class NewProductDTO {
     private BigDecimal price;
 
     @NotBlank(message = "O nome deve ser preenchido!")
+    @Size(message = "O nome deve ter entre 5 e 100 caracteres", max = 100, min = 5)
     private String name;
 
     @NotNull(message = "A quantidade deve ser informada!")
     @Positive(message = "O valor deve ser positivo!")
-    private int quantity;
+    private Integer quantity;
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
@@ -32,12 +33,12 @@ public class NewProductDTO {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
     public NewProductDTO(){}
 
-    public NewProductDTO(String description, BigDecimal price, String name, int quantity) {
+    public NewProductDTO(String description, BigDecimal price, String name, Integer quantity) {
         this.description = description;
         this.price = price;
         this.name = name;

@@ -5,6 +5,8 @@ import com.selection.process.store.api.dto.ProductDTO;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +24,21 @@ public class Product {
 
     private String name;
     private int quantity;
+
+    public static List<Object> toList(ProductDTO dto){
+        if (dto == null){
+            return new ArrayList<>();
+        }
+
+        List<Object> list = new ArrayList<>();
+        list.add(dto.getQuantity());
+        list.add(dto.getId());
+        list.add(dto.getPrice());
+        list.add(dto.getName());
+        list.add(dto.getDescription());
+
+        return list;
+    }
 
     public Product(){}
 

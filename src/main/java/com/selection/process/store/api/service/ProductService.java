@@ -1,20 +1,19 @@
 package com.selection.process.store.api.service;
 
 import com.selection.process.store.api.dto.NewProductDTO;
+import com.selection.process.store.api.dto.UpdateProductDTO;
 import com.selection.process.store.api.dto.response.GenericResponseDTO;
 import com.selection.process.store.api.dto.ProductDTO;
 import com.selection.process.store.api.entity.Product;
-import com.selection.process.store.api.exception.EmptyFieldException;
-import com.selection.process.store.api.exception.NegativeValueException;
 import com.selection.process.store.api.exception.ResourceNotFoundException;
 import com.selection.process.store.api.projection.ProductMaxProjection;
 import com.selection.process.store.api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -27,6 +26,7 @@ public class ProductService {
     * Lista todos os produtos registrados no banco de dados
      * @return uma lista com os dados de todos os produtos cadastrados no banco.
     */
+    @Transactional
     public List<ProductDTO> findAll(){
         List<Product> list = productRepository.findAll();
         List<ProductDTO> dto = list.stream()
@@ -43,9 +43,10 @@ public class ProductService {
     * @return o objeto que contém os dados do respectivo produto.
      * @throws ResourceNotFoundException caso nenhum produto seja encontrado pelo id fornecido.
     **/
+    @Transactional
     public ProductDTO findById(long productId){
         Product product = productRepository.findById(productId).
-                orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
+                orElseThrow(() -> new ResourceNotFoundException("Produto com id " + productId +  " não encontrado"));
 
         return new ProductDTO(product);
     }
@@ -57,6 +58,7 @@ public class ProductService {
      * @throws MethodArgumentNotValidException caso o nome esteja vazio.
      * @throws MethodArgumentNotValidException caso o preço ou a quantidade seja um número negativo.
      */
+    @Transactional
     public ProductDTO create(NewProductDTO dto){
         Product registeredProduct = productRepository.save(new Product(dto));
         return new ProductDTO(registeredProduct);
@@ -70,9 +72,27 @@ public class ProductService {
      * @throws MethodArgumentNotValidException caso o preço ou a quantidade seja um número negativo.
      * @throws MethodArgumentNotValidException caso o nome esteja vazio.
      */
-    public ProductDTO update(ProductDTO dto){
-        return null;
+    @Transactional
+    public ProductDTO update(UpdateProductDTO dto, long id){
+        Product updateProduct = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Produto com id " + id + " não encontrado"));
+
+        if (dto.getDescription() != null)
+            updateProduct.setDescription(dto.getDescription());
+
+        if (dto.getName() != null)
+            updateProduct.setName(dto.getName());
+
+        if (dto.getPrice() != null)
+            updateProduct.setPrice(dto.getPrice());
+
+        if (dto.getQuantity() != null)
+            updateProduct.setQuantity(dto.getQuantity());
+
+        return new ProductDTO(productRepository.save(updateProduct));
     }
+
+
 
     /**
      * Exclui, pelo id, um produto do banco de dados.
@@ -80,6 +100,7 @@ public class ProductService {
      * @return uma entidade de resposta que confirma a deleção do produto posteriormente.
      * @throws ResourceNotFoundException caso o produto do id fornecido não seja encontrado
      */
+    @Transactional
     public ResponseEntity<GenericResponseDTO> deleteById(long productId){
         return null;
     }
