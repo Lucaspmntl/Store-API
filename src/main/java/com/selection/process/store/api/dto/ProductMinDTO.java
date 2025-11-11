@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class NewProductDTO {
+public class ProductMinDTO {
 
     @NotBlank(message = "A descrição deve ser preenchida!")
     @Size(message = "A descrição deve ter entre 12 e 300 caracteres!", min = 12, max = 300)
@@ -36,16 +36,16 @@ public class NewProductDTO {
     public Integer getQuantity() { return quantity; }
     public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
-    public NewProductDTO(){}
+    public ProductMinDTO(){}
 
-    public NewProductDTO(String description, BigDecimal price, String name, Integer quantity) {
+    public ProductMinDTO(String description, BigDecimal price, String name, Integer quantity) {
         this.description = description;
         this.price = price;
         this.name = name;
         this.quantity = quantity;
     }
 
-    public NewProductDTO(Product obj){
+    public ProductMinDTO(Product obj){
         this.quantity = obj.getQuantity();
         this.name = obj.getName();
         this.price = obj.getPrice();
@@ -55,7 +55,7 @@ public class NewProductDTO {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        NewProductDTO that = (NewProductDTO) o;
+        ProductMinDTO that = (ProductMinDTO) o;
         return quantity == that.quantity && Objects.equals(description, that.description) && Objects.equals(price, that.price) && Objects.equals(name, that.name);
     }
 

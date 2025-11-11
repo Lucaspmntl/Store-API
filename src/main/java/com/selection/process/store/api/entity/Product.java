@@ -1,6 +1,6 @@
 package com.selection.process.store.api.entity;
 
-import com.selection.process.store.api.dto.NewProductDTO;
+import com.selection.process.store.api.dto.ProductMinDTO;
 import com.selection.process.store.api.dto.ProductDTO;
 import jakarta.persistence.*;
 
@@ -50,7 +50,7 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Product(NewProductDTO dto){
+    public Product(ProductMinDTO dto){
         this.quantity = dto.getQuantity();
         this.name = dto.getName();
         this.price = dto.getPrice();

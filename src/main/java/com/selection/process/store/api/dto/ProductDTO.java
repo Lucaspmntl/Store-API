@@ -1,6 +1,7 @@
 package com.selection.process.store.api.dto;
 
 import com.selection.process.store.api.entity.Product;
+import com.selection.process.store.api.projection.ProductProjection;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
@@ -24,7 +25,7 @@ public class ProductDTO {
 
     @NotNull(message = "O Valor deve ser preenchido!")
     @Positive(message = "O valor deve ser positivo!")
-    private int quantity;
+    private Integer quantity;
 
     public long getId() { return id; }
 
@@ -37,17 +38,23 @@ public class ProductDTO {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
     public ProductDTO(){}
-
-    public ProductDTO(long id, String description, BigDecimal price, String name, int quantity) {
+    public ProductDTO(long id, String description, BigDecimal price, String name, Integer quantity) {
         this.id = id;
         this.description = description;
         this.price = price;
         this.name = name;
         this.quantity = quantity;
+    }
+    public ProductDTO(ProductProjection projection){
+        this.id = projection.getId();
+        this.description = projection.getDescription();
+        this.price = projection.getPrice();
+        this.name = projection.getName();
+        this.quantity = projection.getQuantity();
     }
 
     public ProductDTO(Product obj){

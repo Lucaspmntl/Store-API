@@ -2,7 +2,7 @@ package com.selection.process.store.api.projection;
 
 import java.math.BigDecimal;
 
-public interface ProductMaxProjection {
+public interface ProductProjection {
     Long getId();
     String getName();
     BigDecimal getPrice();
