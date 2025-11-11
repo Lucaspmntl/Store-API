@@ -1,9 +1,9 @@
 
-# Store
+# Store 🛍️
 
 Uma API simples e concisa para o gerenciamento de uma tabela de produtos. O projeto foi desenvolvido com Java Spring e implementa um CRUD completo, validação de dados, tratamento de exceções e uma querry customizada.
 
-## Funcionalidades Principais
+## Funcionalidades Principais ✨
 
 - CRUD (Create, read, update and delete) completo
 - Validação de dados com Bean Validation
@@ -12,20 +12,20 @@ Uma API simples e concisa para o gerenciamento de uma tabela de produtos. O proj
 - Banco de dados embutido (em memória)
 
 
-## Tecnologias
+## Tecnologias 🛠️
 
 **Front-end:** Html, JavaScript
 
 **Back-end:** Java 17, Spring boot 3, JPA/Hibernate, H2 Data Base, Maven, Hibernate Validator
 
-## Execução do Projeto
+## Execução do Projeto 🚀
 
 **Pré-requisitos**
 
 - Java 17 (JDK)
 - Maven 3.x
     
-## Rodando localmente
+## Rodando localmente 🖥️
 
 1. Clone o projeto
 
@@ -40,8 +40,19 @@ cd Store-API
 ./mvnw spring-boot:run
 ```
 
-3. Acessando o H2
-<img width="1919" height="965" alt="image" src="https://github.com/user-attachments/assets/e0a8db71-6859-4798-acca-d933f6d50689" />
+3. Acessando o Frontend 🖼️
+> O projeto inclui uma página index.html que é servida automaticamente pelo Spring Boot, nela é possivel visualizar os produtos registrados no sistema e excluir um determinado produto.
+
+1. Com o backend já em execução (passo 1), abra seu navegador.
+2. Acesse a seguinte URL:
+    
+- http://localhost:8080
+
+A página carregará a lista de produtos e permitirá a exclusão diretamente pela interface.
+<img width="1018" height="958" alt="image" src="https://github.com/user-attachments/assets/927bf404-39df-4de0-9770-ddd45614cd1e" />
+
+
+4. Acessando o H2 (Opcional) 🗃️
 
 Com a aplicação rodando, você pode acessar o console do H2 para inspecionar os dados diretamente no seu navegador:
 
@@ -50,10 +61,11 @@ Com a aplicação rodando, você pode acessar o console do H2 para inspecionar o
 - JDBC URL: jdbc:h2:mem:storedb\
 - User Name: sa
 - Password: (deixe em branco)
+<img width="1919" height="965" alt="image" src="https://github.com/user-attachments/assets/e0a8db71-6859-4798-acca-d933f6d50689" />
 
 **Nota:** _O projeto está configurado para popular o banco com dados iniciais (import.sql) para facilitar os testes dos endpoints GET._
 
-## Documentação da API
+## Documentação da API 📚
 
 
 #### _Recurso: Produto (/product)_
@@ -140,7 +152,7 @@ Resposta de sucesso (200 OK)
 
 
 
-## Tratamento de erros
+## Tratamento de erros ⚠️
 A API utliza-se de um Global Exception Handler para manipular as exceções e retornar respostas claras em casos de erro.
 
 **Exemplo: Erro de validação**
