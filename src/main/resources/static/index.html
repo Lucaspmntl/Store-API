@@ -52,7 +52,7 @@
                 console.error('Erro ao carregar produtos:', erro);
 
                 document.getElementById('mensagemStatus').textContent =
-                    'Erro ap carregar produtos. Verifique a API.';
+                    'Erro ao carregar produtos. Verifique a API.';
 
                 console.error('Erro:', erro);
             });
@@ -68,35 +68,49 @@
         celulaId.textContent = produto.id;
 
         const celulaNome = document.createElement('td');
-        celulaNome.textContent = produto.nome;
+        celulaNome.textContent = produto.name;
 
         const celulaDescricao = document.createElement('td');
-        celulaDescricao.textContent = produto.descricao;
+        celulaDescricao.textContent = produto.description;
 
         const celulaPreco = document.createElement('td');
 
-        celulaPreco.textContent = produto.preco.toLocaleString('pt-BR', {
+        celulaPreco.textContent = produto.price.toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL'
         });
 
         const celulaQuantidade = document.createElement('td');
-        celulaQuantidade.textContent = produto.quantidade;
+        celulaQuantidade.textContent = produto.quantity;
 
         const celulaAcoes = document.createElement('td');
-
         const botaoExcluir = document.createElement('button');
         botaoExcluir.textContent = 'Excluir';
 
         botaoExcluir.addEventListener('click', function() {
 
-            const confirmacao = confirm('Tem certeza que deseja excluir o produto "' + produto.nome + '"?');
+            const confirmacao = confirm('Tem certeza que deseja excluir o produto "' + produto.name + '"?');
 
-            if (confirmacao) {
-                novaLinha.remove();
-
-                console.log('Produto removido da tabela: ' + produto.nome);
+            if (!confirmacao) {
+                return;
             }
+
+            const url = 'http://localhost:8080/product/' + produto.id;
+            fetch(url, {
+                method: 'DELETE'
+            })
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Erro na API: ' + response.status);
+                    }
+
+                    novaLinha.remove();
+                    console.log('Produto "' + produto.name + '" removido com sucesso!');
+                })
+                .catch(function(erro) {
+                    console.error('Falha ao excluir produto:', erro);
+                    alert('Não foi possível excluir o produto. Verifique o console.');
+                });
         });
 
         celulaAcoes.appendChild(botaoExcluir);

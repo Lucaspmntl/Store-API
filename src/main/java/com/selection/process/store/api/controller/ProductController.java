@@ -22,6 +22,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    @CrossOrigin
     @GetMapping
     public ResponseEntity<List<ProductDTO>> findAll(@RequestParam (required = false) String name){
         if (name == null || name.isBlank() || name.trim().isBlank()){
@@ -33,12 +34,14 @@ public class ProductController {
         return ResponseEntity.ok(partialNameProducts);
     }
 
+    @CrossOrigin
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable long id){
         ProductDTO dto = productService.findById(id);
         return ResponseEntity.ok(dto);
     }
 
+    @CrossOrigin
     @PostMapping(value = "/register")
     public ResponseEntity<GenericIdResponseDTO> registerProduct(@Valid @RequestBody ProductMinDTO dto){
         ProductDTO registeredProduct = productService.create(dto);
@@ -46,6 +49,7 @@ public class ProductController {
                 new GenericIdResponseDTO("Produto registrado com sucesso!", registeredProduct.getId(), 201));
     }
 
+    @CrossOrigin
     @PutMapping(value = "/{id}")
     public ResponseEntity<UpdatedProductResponseDTO> updateProduct(
             @Valid
@@ -61,6 +65,7 @@ public class ProductController {
         ));
     }
 
+    @CrossOrigin
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<GenericResponseDTO> deleteById(@PathVariable long id){
         ProductDTO deletedProduct = productService.deleteById(id);
@@ -69,11 +74,5 @@ public class ProductController {
                         deletedProduct.getName() + " excluído com sucesso!",
                         200));
     }
-
-    @GetMapping(value = "/search")
-    public ResponseEntity<ProductDTO> search(@RequestParam String partialName){
-        return null;
-    }
-
 
 }
