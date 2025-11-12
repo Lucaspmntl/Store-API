@@ -4,131 +4,210 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Store</title>
-</head>
-<body>
-<div id="container">
-    <h1>Lista de Produtos</h1>
-
-    <table id="tabelaProdutos">
-        <thead id="cabecalhoTabela">
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Preço</th>
-            <th>Quantidade</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody id="corpoTabela">
-        </tbody>
-    </table>
-
-    <p id="mensagemStatus">Carregando produtos...</p>
-</div>
-
-<script>
-    function carregarProdutos() {
-
-        fetch('http://localhost:8080/product')
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Erro ao buscar produtos: ' + response.status);
-                }
-
-                return response.json();
-            })
-            .then(function(produtos) {
-                document.getElementById('mensagemStatus').textContent =
-                    'Total de produtos: ' + produtos.length;
-
-                produtos.forEach(function(produto) {
-                    adicionarLinhaNaTabela(produto);
-                });
-
-                console.log('Produtos carregados com sucesso!', produtos);
-            })
-            .catch(function(erro) {
-                console.error('Erro ao carregar produtos:', erro);
-
-                document.getElementById('mensagemStatus').textContent =
-                    'Erro ao carregar produtos. Verifique a API.';
-
-                console.error('Erro:', erro);
-            });
-    }
-
-    function adicionarLinhaNaTabela(produto) {
-        const tbody = document.getElementById('corpoTabela');
-
-        const novaLinha = document.createElement('tr');
-
-        const celulaId = document.createElement('td');
-
-        celulaId.textContent = produto.id;
-
-        const celulaNome = document.createElement('td');
-        celulaNome.textContent = produto.name;
-
-        const celulaDescricao = document.createElement('td');
-        celulaDescricao.textContent = produto.description;
-
-        const celulaPreco = document.createElement('td');
-
-        celulaPreco.textContent = produto.price.toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        });
-
-        const celulaQuantidade = document.createElement('td');
-        celulaQuantidade.textContent = produto.quantity;
-
-        const celulaAcoes = document.createElement('td');
-        const botaoExcluir = document.createElement('button');
-        botaoExcluir.textContent = 'Excluir';
-
-        botaoExcluir.addEventListener('click', function() {
-
-            const confirmacao = confirm('Tem certeza que deseja excluir o produto "' + produto.name + '"?');
-
-            if (!confirmacao) {
-                return;
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                background-color: #f4f7f6;
+                color: #333;
+                margin: 0;
+                padding: 20px;
             }
 
-            const url = 'http://localhost:8080/product/' + produto.id;
-            fetch(url, {
-                method: 'DELETE'
-            })
+            #container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background: #ffffff;
+                padding: 25px 40px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            }
+
+            h1 {
+                text-align: center;
+                color: #2c3e50;
+            }
+
+            #tabelaProdutos {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            th, td {
+                padding: 12px 15px;
+                border: 1px solid #ddd;
+                text-align: left;
+            }
+
+            thead {
+                background-color: #2c3e50;
+                color: #ffffff;
+            }
+
+            tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+
+            tbody tr:hover {
+                background-color: #f1f1f1;
+            }
+
+            td:nth-child(3) {
+                max-width: 300px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            button {
+                background-color: #e74c3c;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background-color 0.2s;
+            }
+
+            button:hover {
+                background-color: #c0392b;
+            }
+
+            #mensagemStatus {
+                text-align: center;
+                margin-top: 20px;
+                font-style: italic;
+                color: #777;
+            }
+        </style>
+</head>
+    <body>
+    </head>
+    <body>
+    <div id="container">
+        <h1>Lista de Produtos</h1>
+
+        <table id="tabelaProdutos">
+            <thead id="cabecalhoTabela">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody id="corpoTabela">
+            </tbody>
+        </table>
+
+        <p id="mensagemStatus">Carregando produtos...</p>
+    </div>
+
+    <script>
+        function carregarProdutos() {
+
+            fetch('http://localhost:8080/product')
                 .then(function(response) {
                     if (!response.ok) {
-                        throw new Error('Erro na API: ' + response.status);
+                        throw new Error('Erro ao buscar produtos: ' + response.status);
                     }
 
-                    novaLinha.remove();
-                    console.log('Produto "' + produto.name + '" removido com sucesso!');
+                    return response.json();
+                })
+                .then(function(produtos) {
+                    document.getElementById('mensagemStatus').textContent =
+                        'Total de produtos: ' + produtos.length;
+
+                    produtos.forEach(function(produto) {
+                        adicionarLinhaNaTabela(produto);
+                    });
+
+                    console.log('Produtos carregados com sucesso!', produtos);
                 })
                 .catch(function(erro) {
-                    console.error('Falha ao excluir produto:', erro);
-                    alert('Não foi possível excluir o produto. Verifique o console.');
+                    console.error('Erro ao carregar produtos:', erro);
+
+                    document.getElementById('mensagemStatus').textContent =
+                        'Erro ao carregar produtos. Verifique a API.';
+
+                    console.error('Erro:', erro);
                 });
+        }
+
+        function adicionarLinhaNaTabela(produto) {
+            const tbody = document.getElementById('corpoTabela');
+
+            const novaLinha = document.createElement('tr');
+
+            const celulaId = document.createElement('td');
+
+            celulaId.textContent = produto.id;
+
+            const celulaNome = document.createElement('td');
+            celulaNome.textContent = produto.name;
+
+            const celulaDescricao = document.createElement('td');
+            celulaDescricao.textContent = produto.description;
+
+            const celulaPreco = document.createElement('td');
+
+            celulaPreco.textContent = produto.price.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+
+            const celulaQuantidade = document.createElement('td');
+            celulaQuantidade.textContent = produto.quantity;
+
+            const celulaAcoes = document.createElement('td');
+            const botaoExcluir = document.createElement('button');
+            botaoExcluir.textContent = 'Excluir';
+
+            botaoExcluir.addEventListener('click', function() {
+
+                const confirmacao = confirm('Tem certeza que deseja excluir o produto "' + produto.name + '"?');
+
+                if (!confirmacao) {
+                    return;
+                }
+
+                const url = 'http://localhost:8080/product/' + produto.id;
+                fetch(url, {
+                    method: 'DELETE'
+                })
+                    .then(function(response) {
+                        if (!response.ok) {
+                            throw new Error('Erro na API: ' + response.status);
+                        }
+
+                        novaLinha.remove();
+                        console.log('Produto "' + produto.name + '" removido com sucesso!');
+                    })
+                    .catch(function(erro) {
+                        console.error('Falha ao excluir produto:', erro);
+                        alert('Não foi possível excluir o produto. Verifique o console.');
+                    });
+            });
+
+            celulaAcoes.appendChild(botaoExcluir);
+
+            novaLinha.appendChild(celulaId);
+            novaLinha.appendChild(celulaNome);
+            novaLinha.appendChild(celulaDescricao);
+            novaLinha.appendChild(celulaPreco);
+            novaLinha.appendChild(celulaQuantidade);
+            novaLinha.appendChild(celulaAcoes);
+
+            tbody.appendChild(novaLinha);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Iniciando busca de produtos...');
+            carregarProdutos();
         });
-
-        celulaAcoes.appendChild(botaoExcluir);
-
-        novaLinha.appendChild(celulaId);
-        novaLinha.appendChild(celulaNome);
-        novaLinha.appendChild(celulaDescricao);
-        novaLinha.appendChild(celulaPreco);
-        novaLinha.appendChild(celulaQuantidade);
-        novaLinha.appendChild(celulaAcoes);
-
-        tbody.appendChild(novaLinha);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('Iniciando busca de produtos...');
-        carregarProdutos();
-    });
-</script>
-</body>
+    </script>
+    </body>
 </html>
