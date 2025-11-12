@@ -48,8 +48,9 @@ cd Store-API
     
 - http://localhost:8080
 
-A página carregará a lista de produtos e permitirá a exclusão diretamente pela interface.
-<img width="1018" height="958" alt="image" src="https://github.com/user-attachments/assets/927bf404-39df-4de0-9770-ddd45614cd1e" />
+_A página carregará a lista de produtos e permitirá a exclusão diretamente pela interface._
+<img width="1919" height="959" alt="image" src="https://github.com/user-attachments/assets/0292ecb8-a870-47f5-8a1c-84b6099d1dcc" />
+
 
 
 4. Acessando o H2 (Opcional) 🗃️
